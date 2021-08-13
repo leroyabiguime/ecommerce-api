@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('register',[passportAuthController::class,'register']);
+Route::post('login',[passportAuthController::class,'login']);
+//add this middleware to ensure that every request is authenticated
+Route::middleware('auth:api')->group(function(){
+    Route::get('user', [passportAuthController::class,'authenticatedUserDetails']);
 });
